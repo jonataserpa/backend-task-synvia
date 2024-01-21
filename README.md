@@ -4,7 +4,7 @@ Api Desafio das Taks
 
 Tarefa 1: Configuração do ambiente
 
-    • Configure um novo projeto React (ou Angular) para o front-end e um projeto Node.js
+    • Configure um novo projeto React para o front-end e um projeto Node.js
     para o back-end.
     • Certifique-se de que ambos os projetos utilizem TypeScript.
 

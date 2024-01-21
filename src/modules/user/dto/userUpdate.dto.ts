@@ -1,8 +1,13 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 import constants from 'src/config/constants';
-import { UserAddressDto } from './userAddress.dto';
 import { UserCreateDto } from './userCreate.dto';
 
 export class UpdateModuleDto extends PartialType(UserCreateDto) {
@@ -55,7 +60,4 @@ export class UpdateModuleDto extends PartialType(UserCreateDto) {
   @IsNotEmpty()
   @IsInt()
   companyId: number;
-
-  @IsOptional()
-  address: UserAddressDto[];
 }

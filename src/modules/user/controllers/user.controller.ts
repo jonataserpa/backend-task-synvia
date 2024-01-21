@@ -7,6 +7,7 @@ import {
   Delete,
   Query,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -23,10 +24,12 @@ import { AccessControl } from 'src/utils/decorators/accessControl.decorator';
 import { UserCreateDto } from '../dto/userCreate.dto';
 import { UpdateModuleDto } from '../dto/userUpdate.dto';
 import { UserService } from '../services/user.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('user')
 @Controller('user')
 @ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly moduleService: UserService) {}
 

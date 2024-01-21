@@ -1,17 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsOptional, IsString, Length } from 'class-validator';
 import constants from 'src/config/constants';
 
 export class UserCreateDto {
-  @ApiProperty()
-  id: number;
-
   @ApiProperty({
     description: 'Name default data perfil',
     example: 'Jonata',
@@ -49,4 +40,11 @@ export class UserCreateDto {
   })
   @IsString()
   radiogender: string;
+
+  @ApiProperty({
+    description: 'Password user',
+    example: 'xxxx',
+  })
+  @IsOptional()
+  password: string;
 }

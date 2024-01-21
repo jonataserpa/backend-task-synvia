@@ -6,8 +6,8 @@ import { TaskModule } from './modules/task/task.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     TaskModule,
   ],

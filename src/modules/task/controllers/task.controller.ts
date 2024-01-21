@@ -7,6 +7,7 @@ import {
   Delete,
   Query,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -22,11 +23,12 @@ import {
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
 import { TaskService } from '../services/task.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('task')
 @Controller('task')
 @ApiBearerAuth()
-@Controller('task')
+@UseGuards(AuthGuard('jwt'))
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 

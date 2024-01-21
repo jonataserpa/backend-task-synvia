@@ -7,20 +7,19 @@ import { SecuritySchemeType } from '@nestjs/swagger/dist/interfaces/open-api-spe
  * @param app
  */
 export function buildSwagger(app: INestApplication) {
-  // const bearerAuthType = process.env
-  //   .SWAGGER_BEARER_AUTH_TYPE as SecuritySchemeType;
+  const bearerAuthType = process.env
+    .SWAGGER_BEARER_AUTH_TYPE as SecuritySchemeType;
 
-  // if (process.env.SWAGGER_UI === 'false') {
-  //   return;
-  // }
+  if (process.env.SWAGGER_UI === 'false') {
+    return;
+  }
 
   const config = new DocumentBuilder()
     .setTitle(process.env.SWAGGER_TITLE)
     .setDescription(process.env.SWAGGER_DESCRIPTION)
     .setVersion(process.env.SWAGGER_VERSION)
-    // .addTag('user')
-    // .addBearerAuth({ in: 'header', type: bearerAuthType })
-    // .addServer(process.env.SWAGGER_SERVER)
+    .addBearerAuth({ in: 'header', type: bearerAuthType })
+    .addServer(process.env.SWAGGER_SERVER)
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

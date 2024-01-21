@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/config/database/PrismaService';
+import { PrismaService } from '../../config/database/PrismaService';
 import { TaskController } from './controllers/task.controller';
 import { TaskService } from './services/task.service';
 

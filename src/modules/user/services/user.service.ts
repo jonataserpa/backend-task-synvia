@@ -1,24 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/config/database/PrismaService';
+import { PrismaService } from '../../../config/database/PrismaService';
 import { UserCreateDto } from '../dto/userCreate.dto';
 import { UpdateModuleDto } from '../dto/userUpdate.dto';
+import { hashSync } from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(userDto: UserCreateDto) {
-    const user = await this.prisma.user.create({
-      data: {
-        name: userDto.name,
-        dateborn: userDto.dateborn,
-        email: userDto.email,
-        phone: userDto.phone,
-        radiogender: userDto.radiogender,
-      },
-    });
+    try {
+      const user = await this.prisma.user.create({
+        data: {
+          name: userDto.name,
+          dateborn: userDto.dateborn,
+          email: userDto.email,
+          phone: userDto.phone,
+          radiogender: userDto.radiogender,
+          password: hashSync(userDto.password, 10),
+        },
+      });
 
-    return user;
+      return user;
+    } catch (error) {
+      if (error.code === 'P2002') {
+        const erro = {
+          statusCode: 403,
+          name: 'Unique constraint failed on the {constraint}',
+          message: 'Email ja existe!',
+        };
+        throw erro;
+      }
+      throw new Error();
+    }
   }
 
   async findAll(params: { skip?: number; take?: number; filter?: string }) {
