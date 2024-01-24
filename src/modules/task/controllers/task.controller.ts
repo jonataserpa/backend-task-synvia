@@ -86,8 +86,8 @@ export class TaskController {
     required: false,
   })
   findAll(
-    @Query('skip') skip: string,
-    @Query('take') take: string,
+    @Query('skip') skip: number,
+    @Query('take') take: number,
     @Query('title') title: string,
     @Query('description') description: string,
     @Query('userId') userId: number,

@@ -33,7 +33,7 @@ export class TaskService {
       description: {
         contains: description,
       },
-      price: {
+      title: {
         contains: title,
       },
       createAt: {
