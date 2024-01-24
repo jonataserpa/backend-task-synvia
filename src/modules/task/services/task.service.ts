@@ -42,20 +42,58 @@ export class TaskService {
       userId: userId,
     };
 
-    const data = await this.prisma.task.findMany({
-      skip,
-      take,
-      where: {
-        deleteAt: null,
-        ...options,
-      },
-      include: {
-        user: true,
-      },
-      orderBy: {
-        id: 'desc',
-      },
-    });
+    let data;
+    if (createAt && userId) {
+      data = await this.prisma.task.findMany({
+        skip,
+        take,
+        where: {
+          deleteAt: null,
+          ...options,
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      });
+    } else if (!createAt && userId) {
+      data = await this.prisma.task.findMany({
+        skip,
+        take,
+        where: {
+          deleteAt: null,
+          userId: userId,
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      });
+    } else {
+      data = await this.prisma.task.findMany({
+        skip,
+        take,
+        where: {
+          deleteAt: null,
+          description: {
+            contains: description,
+          },
+          title: {
+            contains: title,
+          },
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      });
+    }
 
     const dataTasks = {
       data: data,
