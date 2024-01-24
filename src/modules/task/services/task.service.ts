@@ -19,12 +19,35 @@ export class TaskService {
     return user;
   }
 
-  async findAll(params: { skip?: number; take?: number; filter?: string }) {
-    const { skip, take, filter } = params;
-    let data;
-    const totalCount = await this.prisma.task.findMany({
+  async findAll(params: {
+    skip?: number;
+    take?: number;
+    title?: string;
+    description?: string;
+    userId?: number;
+    createAt?: string;
+  }) {
+    const { skip, take, title, description, userId, createAt } = params;
+
+    const options = {
+      description: {
+        contains: description,
+      },
+      price: {
+        contains: title,
+      },
+      createAt: {
+        gte: new Date(createAt),
+      },
+      userId: userId,
+    };
+
+    const data = await this.prisma.task.findMany({
+      skip,
+      take,
       where: {
         deleteAt: null,
+        ...options,
       },
       include: {
         user: true,
@@ -34,11 +57,11 @@ export class TaskService {
       },
     });
 
-    const dataCompanys = {
-      data: totalCount,
-      headers: totalCount.length === 1 ? 1 : totalCount.length,
+    const dataTasks = {
+      data: data,
+      headers: data.length === 1 ? 1 : data.length,
     };
-    return dataCompanys;
+    return dataTasks;
   }
 
   findOne(id: number) {

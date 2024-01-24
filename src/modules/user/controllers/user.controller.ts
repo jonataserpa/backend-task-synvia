@@ -29,7 +29,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('user')
 @Controller('user')
 @ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
+//@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly moduleService: UserService) {}
 

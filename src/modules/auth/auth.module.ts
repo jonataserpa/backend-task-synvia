@@ -19,7 +19,7 @@ import { PrismaService } from '../../config/database/PrismaService';
     JwtModule.register({
       secret: 'abcd123456',
       signOptions: {
-        expiresIn: '60s',
+        expiresIn: '1d',
       },
     }),
   ],

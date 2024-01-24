@@ -28,7 +28,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('task')
 @Controller('task')
 @ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
+//@UseGuards(AuthGuard('jwt'))
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
@@ -62,7 +62,25 @@ export class TaskController {
     required: false,
   })
   @ApiQuery({
-    name: 'filter',
+    name: 'title',
+    type: String,
+    description: 'A parameter. Optional',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'description',
+    type: String,
+    description: 'A parameter. Optional',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: Number,
+    description: 'A parameter. Optional',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'createAt',
     type: String,
     description: 'A parameter. Optional',
     required: false,
@@ -70,12 +88,18 @@ export class TaskController {
   findAll(
     @Query('skip') skip: string,
     @Query('take') take: string,
-    @Query('filter') filter: string,
+    @Query('title') title: string,
+    @Query('description') description: string,
+    @Query('userId') userId: number,
+    @Query('createAt') createAt: string,
   ) {
     return this.taskService.findAll({
       skip: Number(skip),
       take: Number(take),
-      filter: filter,
+      title: title,
+      description: description,
+      userId: userId,
+      createAt: createAt,
     });
   }
 
